@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="vi">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Quản lý sinh viên - Đại học Đông Á</title>
+
+    <link rel="stylesheet" href="/css/student.css">
+</head>
+
+<body>
+
+<div class="app">
+
+    <!-- ================= SIDEBAR ================= -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+
+            <div class="logo-icon">
+                🎓
+            </div>
+
+            <div>
+
+                <div class="logo-title">
+                    ĐẠI HỌC
+                </div>
+
+                <div class="logo-subtitle">
+                    ĐÔNG Á
+                </div>
+
+            </div>
+
+        </div>
+
+
+        <div class="menu">
+
+            <button class="menu-item active"
+                    id="menuStudent">
+
+                <span class="menu-icon">
+                    👥
+                </span>
+
+                <span>
+                    Sinh viên
+                </span>
+
+            </button>
+
+
+            <button class="menu-item"
+                    id="menuSubject">
+
+                <span class="menu-icon">
+                    📖
+                </span>
+
+                <span>
+                    Học phần
+                </span>
+
+            </button>
+
+
+            <button class="menu-item"
+                    id="menuRoom">
+
+                <span class="menu-icon">
+                    🏫
+                </span>
+
+                <span>
+                    Phòng học
+                </span>
+
+            </button>
+
+        </div>
+
+
+        <div class="sidebar-bottom">
+
+            🎓 Đại học Đông Á
+
+        </div>
+
+    </aside>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <main class="main">
+
+        <!-- HEADER -->
+
+        <header class="top-header">
+
+            <div>
+
+                <h1>
+                    Quản lý sinh viên
+                </h1>
+
+                <p>
+                    Đại học Đông Á - Quản lý thông tin sinh viên
+                </p>
+
+            </div>
+
+
+            <div class="breadcrumb">
+
+                <span>
+                    Trang chủ
+                </span>
+
+                <span>
+                    /
+                </span>
+
+                <strong>
+                    Sinh viên
+                </strong>
+
+            </div>
+
+        </header>
+
+
+        <!-- ================= CONTENT ================= -->
+
+        <section class="content">
+
+            <div class="student-card">
+
+
+                <!-- CARD HEADER -->
+
+                <div class="card-header">
+
+                    <div class="card-title">
+
+                        <span class="card-icon">
+                            👥
+                        </span>
+
+                        <span>
+                            Danh sách sinh viên
+                        </span>
+
+                    </div>
+
+
+                    <button
+                        class="btn btn-primary"
+                        id="btnAdd">
+
+                        <span>
+                            ＋
+                        </span>
+
+                        Thêm sinh viên
+
+                    </button>
+
+                </div>
+
+
+                <!-- ================= SEARCH ================= -->
+
+                <div class="search-area">
+
+                    <div class="search-box">
+
+                        <input
+                            type="text"
+                            id="keyword"
+                            placeholder="Tìm mã SV, họ tên, email, số điện thoại...">
+
+                        <button
+                            class="btn btn-search"
+                            id="btnSearch">
+
+                            🔍 Tìm kiếm
+
+                        </button>
+
+                    </div>
+
+
+                    <button
+                        class="btn btn-refresh"
+                        id="btnRefresh">
+
+                        🔄 Làm mới
+
+                    </button>
+
+                </div>
+
+
+                <!-- MESSAGE -->
+
+                <div
+                    id="message"
+                    class="message hidden">
+                </div>
+
+
+                <!-- ================= TABLE ================= -->
+
+                <div class="table-container">
+
+                    <table>
+
+                        <thead>
+
+                        <tr>
+
+                            <th>
+                                STT
+                            </th>
+
+                            <th>
+                                Mã sinh viên
+                            </th>
+
+                            <th>
+                                Họ và tên
+                            </th>
+
+                            <th>
+                                Email
+                            </th>
+
+                            <th>
+                                Số điện thoại
+                            </th>
+
+                            <th>
+                                Lớp
+                            </th>
+
+                            <th>
+                                Thao tác
+                            </th>
+
+                        </tr>
+
+                        </thead>
+
+
+                        <tbody id="studentTable">
+
+                        <tr>
+
+                            <td
+                                colspan="7"
+                                class="loading">
+
+                                Đang tải dữ liệu...
+
+                            </td>
+
+                        </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+
+                <!-- FOOTER -->
+
+                <div class="table-footer">
+
+                    <span id="totalStudents">
+                        Tổng: 0 sinh viên
+                    </span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- MODAL THÊM / SỬA -->
+<!-- ================================================= -->
+
+<div
+    id="studentModal"
+    class="modal hidden">
+
+
+    <div class="modal-background"
+         id="modalBackground">
+    </div>
+
+
+    <div class="modal-box">
+
+
+        <!-- MODAL HEADER -->
+
+        <div class="modal-header">
+
+            <div>
+
+                <h2 id="modalTitle">
+                    Thêm sinh viên
+                </h2>
+
+                <p>
+                    Đại học Đông Á - Nhập thông tin sinh viên
+                </p>
+
+            </div>
+
+
+            <button
+                class="close-button"
+                id="btnClose">
+
+                ×
+
+            </button>
+
+        </div>
+
+
+        <!-- FORM -->
+
+        <form id="studentForm">
+
+            <input
+                type="hidden"
+                id="studentId">
+
+
+            <div class="form-grid">
+
+
+                <!-- MÃ SV -->
+
+                <div class="form-group">
+
+                    <label>
+                        Mã sinh viên
+                        <span>*</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        id="studentCode"
+                        placeholder="Ví dụ: SV010"
+                        required>
+
+                </div>
+
+
+                <!-- HỌ TÊN -->
+
+                <div class="form-group">
+
+                    <label>
+                        Họ và tên
+                        <span>*</span>
+                    </label>
+
+                    <input
+                        type="text"
+                        id="fullName"
+                        placeholder="Nhập họ và tên"
+                        required>
+
+                </div>
+
+
+                <!-- EMAIL -->
+
+                <div class="form-group">
+
+                    <label>
+                        Email
+                        <span>*</span>
+                    </label>
+
+                    <input
+                        type="email"
+                        id="email"
+                        placeholder="example@gmail.com"
+                        required>
+
+                </div>
+
+
+                <!-- PHONE -->
+
+                <div class="form-group">
+
+                    <label>
+                        Số điện thoại
+                    </label>
+
+                    <input
+                        type="text"
+                        id="phone"
+                        placeholder="0901234567">
+
+                </div>
+
+
+                <!-- CLASS -->
+
+                <div class="form-group full">
+
+                    <label>
+                        Lớp
+                    </label>
+
+                    <input
+                        type="text"
+                        id="className"
+                        placeholder="Ví dụ: C2024A">
+
+                </div>
+
+            </div>
+
+
+            <!-- FORM BUTTON -->
+
+            <div class="modal-buttons">
+
+                <button
+                    type="button"
+                    class="btn btn-cancel"
+                    id="btnCancel">
+
+                    Hủy
+
+                </button>
+
+
+                <button
+                    type="submit"
+                    class="btn btn-primary"
+                    id="btnSave">
+
+                    Lưu sinh viên
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+
+</div>
+
+
+<!-- ================================================= -->
+<!-- MODAL XÓA -->
+<!-- ================================================= -->
+
+<div
+    id="deleteModal"
+    class="modal hidden">
+
+
+    <div class="modal-background">
+    </div>
+
+
+    <div class="delete-box">
+
+        <div class="delete-icon">
+            !
+        </div>
+
+
+        <h2>
+            Xóa sinh viên?
+        </h2>
+
+
+        <p>
+
+            Bạn có chắc muốn xóa:
+
+            <strong id="deleteName">
+            </strong>
+
+            ?
+
+        </p>
+
+
+        <div class="modal-buttons">
+
+            <button
+                class="btn btn-cancel"
+                id="btnCancelDelete">
+
+                Hủy
+
+            </button>
+
+
+            <button
+                class="btn btn-danger"
+                id="btnConfirmDelete">
+
+                Xóa
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- TOAST -->
+
+<div
+    id="toast"
+    class="toast">
+
+</div>
+
+
+<script src="/js/student.js"></script>
+
+</body>
+
+</html>
